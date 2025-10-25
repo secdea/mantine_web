@@ -17,7 +17,7 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
 
   const refreshAuth = async () => {
     try {
-      const res = await fetch("/api/auth/validate", {
+      const res = await fetch(process.env.NEXT_PUBLIC_API_BASE_URL + "/api/Login/CurrentUser", {
         credentials: "include"
       });
 

@@ -14,7 +14,7 @@ import { Logo } from './Logo';
 import classes from './NavbarNested.module.css';
 
 const mockdata = [
-  { label: 'Dashboard', icon: IconGauge },
+  { label: 'Dashboard', icon: IconGauge, link: '/dashboard' },
   {
     label: 'Market news',
     icon: IconNotes,
