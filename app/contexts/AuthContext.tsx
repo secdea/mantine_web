@@ -3,17 +3,26 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 
-type AuthStatus = "unknown" | "authenticated" | "unauthenticated";
+export type AuthStatus = "unknown" | "authenticated" | "unauthenticated";
+
+interface UserInfo {
+  name: string;
+  roles: string[];
+}
 
 interface AuthContextType {
   status: AuthStatus;
+  user: UserInfo | null;
   refreshAuth: () => Promise<void>;
+  login: (username: string, password: string) => Promise<boolean>;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthContextProvider({ children }: { children: React.ReactNode }) {
   const [status, setStatus] = useState<AuthStatus>("unknown");
+  const [user, setUser] = useState<UserInfo | null>(null);
 
   const refreshAuth = async () => {
     try {
@@ -21,19 +30,46 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
         credentials: "include"
       });
 
-      setStatus(res.ok ? "authenticated" : "unauthenticated");
+      if (!res.ok) throw new Error();
+
+      const data = await res.json();
+      setUser(data);
+      setStatus("authenticated");
     } catch {
+      setUser(null);
       setStatus("unauthenticated");
     }
   };
 
+  const login = async (username: string, password: string) => {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_BASE_URL + "/api/Login/Login", {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password })
+    });
+
+    if (!res.ok) return false;
+
+    await refreshAuth();
+    return true;
+  };
+
+  const logout = async () => {
+    await fetch(process.env.NEXT_PUBLIC_API_BASE_URL + "/api/Login/Logout", {
+      method: "POST",
+      credentials: "include"
+    });
+    setUser(null);
+    setStatus("unauthenticated");
+  };
+
   useEffect(() => {
-    // auto verify on boot
     refreshAuth();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ status, refreshAuth }}>
+    <AuthContext.Provider value={{ status, user, refreshAuth, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
@@ -41,6 +77,6 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
 
 export function useAuth() {
   const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error("useAuth must be used inside AuthContextProvider");
+  if (!ctx) throw new Error("useAuth must be within AuthContextProvider");
   return ctx;
 }
