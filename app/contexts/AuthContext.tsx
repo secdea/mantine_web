@@ -26,7 +26,7 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
 
   const refreshAuth = async () => {
     try {
-      const res = await fetch(process.env.NEXT_PUBLIC_API_BASE_URL + "/api/Login/CurrentUser", {
+      const res = await fetch(window.runtimeConfig?.API_BASE_URL + "/api/Login/CurrentUser", {
         credentials: "include"
       });
 
@@ -42,7 +42,7 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
   };
 
   const login = async (username: string, password: string) => {
-    const res = await fetch(process.env.NEXT_PUBLIC_API_BASE_URL + "/api/Login/Login", {
+    const res = await fetch(window.runtimeConfig?.API_BASE_URL + "/api/Login/Login", {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
@@ -56,7 +56,7 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
   };
 
   const logout = async () => {
-    await fetch(process.env.NEXT_PUBLIC_API_BASE_URL + "/api/Login/Logout", {
+    await fetch(window.runtimeConfig?.API_BASE_URL + "/api/Login/Logout", {
       method: "POST",
       credentials: "include"
     });

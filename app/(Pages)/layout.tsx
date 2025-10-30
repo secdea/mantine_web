@@ -1,6 +1,5 @@
 'use client';
 
-import { Sidebar } from '@/app/(Pages)/SideBar';
 import { AppShell, Burger, Group, Skeleton } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Provider } from 'react-redux';
