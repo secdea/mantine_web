@@ -1,7 +1,10 @@
+//"use client";
+
 import { useState } from 'react';
 import { IconCalendarStats, IconChevronRight } from '@tabler/icons-react';
 import { Box, Collapse, Group, NavLink, Text, ThemeIcon, UnstyledButton } from '@mantine/core';
 import classes from './NavbarLinksGroup.module.css';
+import { useRouter } from 'next/navigation';
 
 interface LinksGroupProps {
   icon: React.FC<any>;
@@ -12,6 +15,7 @@ interface LinksGroupProps {
 }
 
 export function LinksGroup({ icon: Icon, label, link, initiallyOpened, links }: LinksGroupProps) {
+  const router = useRouter();
   const hasLinks = Array.isArray(links);
   const [opened, setOpened] = useState(initiallyOpened || false);
   const items = (hasLinks ? links : []).map((link) => (
@@ -20,7 +24,11 @@ export function LinksGroup({ icon: Icon, label, link, initiallyOpened, links }: 
       className={classes.link}
       href={link.link}
       key={link.label}
-      onClick={(event) => event.preventDefault()}
+      onClick={(event) => {
+        event.preventDefault();        // stop full reload
+        router.push(link.link);        // navigate client-side
+      }}
+
     >
       {link.label}
     </Text>

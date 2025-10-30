@@ -1,7 +1,9 @@
 // app/(auth-required)/layout.tsx
 "use client";
 
-import { useAuth } from "@/app/contexts/AuthContext";
+import { AuthContextProvider, useAuth } from "@/app/contexts/AuthContext";
+import { NavbarNested } from "@/app/sidebar/NavBarNested";
+import { AppShell } from "@mantine/core";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -20,7 +22,20 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
   }
 
   if (status === "authenticated") {
-    return <>{children}</>;
+    return <AppShell
+        // header={{ height: 60 }}
+        navbar={{
+          width: 300,
+          breakpoint: 'sm',
+          collapsed: { mobile: false, desktop: false },
+        }}
+        padding="md"
+      >
+        <AppShell.Navbar >
+          <NavbarNested />
+        </AppShell.Navbar>
+        <AppShell.Main>{children}</AppShell.Main>
+      </AppShell>;
   }
 
   return null;
