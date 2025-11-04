@@ -2,7 +2,7 @@
 
 import { useAuth } from "@/app/contexts/AuthContext";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   Anchor,
@@ -19,11 +19,16 @@ import toast from "@/utils/toast";
 import miscUtils from "@/utils/miscUtils";
 
 export default function AuthenticationImage() {
-  const { login, status } = useAuth();
+  const { login, status, user: userInfo } = useAuth();
   const router = useRouter();
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
   const [message, setMessage] = useState("");
+
+  useEffect(()=> {
+    console.log('userInfo in useEffect');
+    console.log(userInfo);
+  }, [userInfo]);
 
   const handleLogin = async () => {
     var pNotificationID;
@@ -31,6 +36,8 @@ export default function AuthenticationImage() {
       pNotificationID = toast.loading('loading', 'Please wait while we log you in.');
       const ok = await login(user, pass);
       if (ok) {
+        console.log('ok');
+        console.log(ok);
         toast.success('Success', 'Welcome', pNotificationID);
         router.push("/");
       }

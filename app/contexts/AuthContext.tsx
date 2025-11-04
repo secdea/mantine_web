@@ -14,7 +14,7 @@ interface AuthContextType {
   status: AuthStatus;
   user: UserInfo | null;
   refreshAuth: () => Promise<void>;
-  login: (username: string, password: string) => Promise<boolean>;
+  login: (username: string, password: string) => Promise<any>;
   logout: () => Promise<void>;
 }
 
@@ -49,14 +49,15 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
       body: JSON.stringify({ username, password })
     });
 
-    if (!res.ok) {
+    var pOut = null;
+    if (res.ok) {
       const data = await res.text();
       throw new Error(data);
-      return false;
-    }
+    } else 
+      pOut = await res.json();
 
     await refreshAuth();
-    return true;
+    return pOut;
   };
 
   const logout = async () => {
