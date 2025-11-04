@@ -49,7 +49,11 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
       body: JSON.stringify({ username, password })
     });
 
-    if (!res.ok) return false;
+    if (!res.ok) {
+      const data = await res.text();
+      throw new Error(data);
+      return false;
+    }
 
     await refreshAuth();
     return true;
