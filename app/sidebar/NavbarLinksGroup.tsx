@@ -28,7 +28,6 @@ export function LinksGroup({ icon: Icon, label, link, initiallyOpened, links }: 
         event.preventDefault();        // stop full reload
         router.push(link.link);        // navigate client-side
       }}
-
     >
       {link.label}
     </Text>
@@ -36,7 +35,12 @@ export function LinksGroup({ icon: Icon, label, link, initiallyOpened, links }: 
 
   return (
     <>
-      <UnstyledButton onClick={() => setOpened((o) => !o)} className={classes.control}
+      <UnstyledButton onClick={(event: any) => {
+          setOpened((o) => !o);
+          event.preventDefault();        // stop full reload
+          router.push(link || '');        // navigate client-side
+        }}
+        className={classes.control}
         component={link ? 'a' : 'button'}
         href={link || undefined}
       >

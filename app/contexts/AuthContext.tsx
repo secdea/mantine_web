@@ -50,12 +50,12 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
     });
 
     var pOut = null;
-    if (res.ok) {
+    if (res.ok)
+      pOut = await res.json();
+    else {
       const data = await res.text();
       throw new Error(data);
-    } else 
-      pOut = await res.json();
-
+    } 
     await refreshAuth();
     return pOut;
   };

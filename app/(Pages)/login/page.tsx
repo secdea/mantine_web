@@ -17,6 +17,7 @@ import {
 import classes from './AuthenticationImage.module.css';
 import toast from "@/utils/toast";
 import miscUtils from "@/utils/miscUtils";
+import Link from "next/link";
 
 export default function AuthenticationImage() {
   const { login, status, user: userInfo } = useAuth();
@@ -38,7 +39,7 @@ export default function AuthenticationImage() {
       if (ok) {
         console.log('ok');
         console.log(ok);
-        toast.success('Success', 'Welcome', pNotificationID);
+        toast.success('Success', 'Welcome ' + ok.firstName, pNotificationID);
         router.push("/");
       }
       else setMessage("Invalid credentials");
@@ -61,11 +62,9 @@ export default function AuthenticationImage() {
         <Button onClick={handleLogin} fullWidth mt="xl" size="md" radius="md">
           Login
         </Button>
-
         <Text ta="center" mt="md">
-          Don&apos;t have an account?{' '}
-          <Anchor href="#" fw={500} onClick={(event) => event.preventDefault()}>
-            Register
+          <Anchor component={Link} href="/forgotpassword" fw={500} >
+            Forgot password?
           </Anchor>
         </Text>
       </Paper>
