@@ -23,7 +23,7 @@ const mockdata = [
       { label: 'Home', link: '/' },
       { label: 'Dashboard', link: '/dashboard' },
       { label: 'Login', link: '/login' },
-      { label: 'Real time', link: '/' },
+      { label: 'Gilde Data Grid', link: '/glidetry' },
     ],
   },
   {
