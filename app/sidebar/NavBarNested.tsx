@@ -23,6 +23,7 @@ const mockdata = [
       { label: 'Home', link: '/' },
       { label: 'Dashboard', link: '/dashboard' },
       { label: 'Login', link: '/login' },
+      { label: 'Mantine React Table', link: '/mrt' },
       { label: 'Gilde Data Grid', link: '/glidetry' },
     ],
   },
