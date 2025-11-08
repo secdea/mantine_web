@@ -19,7 +19,7 @@ import toast from "@/utils/toast";
 import miscUtils from "@/utils/miscUtils";
 import Link from "next/link";
 import useDelayedFalse from "@/hooks/useDelayedFalse";
-import { useForm } from '@mantine/form';
+import { useForm, hasLength } from '@mantine/form';
 
 export default function AuthenticationImage() {
   const { login, status, user: userInfo } = useAuth();
@@ -29,10 +29,10 @@ export default function AuthenticationImage() {
 
   const mForm = useForm({
     mode: 'uncontrolled',
-    initialValues: {
-      baseUrl: '',
-      password: ''
-    }
+    validate: {
+      username: hasLength({ min: 5 }, 'Username must be at least 5 characters'),
+      password: hasLength({ min: 5 }, 'Password must be at least 5 characters'),
+    },
   });
 
   useEffect(() => {

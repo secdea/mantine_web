@@ -6,7 +6,7 @@ export default class fetchData {
             var pData = vData;
             var pHeaders;
             if (!(pData instanceof FormData)) {
-                pData= JSON.stringify(pData);
+                pData = JSON.stringify(pData);
                 pHeaders = {
                     //'Accept': 'application/json, text/plain, */*',
                     'Accept': '*/*',
@@ -14,7 +14,7 @@ export default class fetchData {
                 };
             }
 
-            var pBaseUrl = store.getState().serverConfig.baseUrl;
+            var pBaseUrl = window.runtimeConfig?.API_BASE_URL;
             var pResponse = await fetch(pBaseUrl + vUrl, {
                 method: 'POST',
                 headers: pHeaders,
@@ -23,21 +23,22 @@ export default class fetchData {
                 mode: 'cors'
             });
             var pText = await pResponse.text();
+            var pJson;
             try {
-                pData = JSON.parse(pText);
-                if (pData?.d != null)
-                    pData = pData.d;
+                pJson = JSON.parse(pText);
+                if (pJson?.d != null)
+                    pJson = pJson.d;
             } catch (error) {
             }
 
-            if (pResponse.ok)
-                return pData;
-            else if (pData != null)
-                throw pData;
+            if (pResponse.ok) 
+                return pJson || pText;
+            else if (pJson != null)
+                throw pJson;
             else if (pText != null)
-                throw new Error(pText);
+                throw pText;
             else
-                throw new Error(pResponse.statusText);
+                throw pResponse.statusText;
         } catch (error2: any) {
             throw error2;
         }

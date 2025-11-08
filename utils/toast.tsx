@@ -33,7 +33,7 @@ export default class toast {
             notifications.show(pParams);
     }
 
-    static error(vTitle: string, vMessage: string, vID: (string | null) = null) {
+    static error(vTitle: string, vMessage: string | React.ReactNode, vID: (string | null) = null) {
         var pParams = {
             id: vID,
             title: vTitle,
