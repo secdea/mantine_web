@@ -3,7 +3,6 @@
 import React, { useMemo } from 'react';
 import { MantineReactTable, useMantineReactTable } from 'mantine-react-table';
 import { Box, Title } from '@mantine/core';
-import 'mantine-react-table/styles.css'; //import MRT styles
 
 export default function MantineReactTableDemo() {
   // 1️⃣ Define columns
@@ -23,6 +22,18 @@ export default function MantineReactTableDemo() {
       { id: 1, firstName: 'John', lastName: 'Doe', age: 28 },
       { id: 2, firstName: 'Jane', lastName: 'Smith', age: 34 },
       { id: 3, firstName: 'Michael', lastName: 'Johnson', age: 45 },
+      { id: 11, firstName: 'John', lastName: 'Doe', age: 28 },
+      { id: 12, firstName: 'Jane', lastName: 'Smith', age: 34 },
+      { id: 13, firstName: 'Michael', lastName: 'Johnson', age: 45 },
+      { id: 21, firstName: 'John', lastName: 'Doe', age: 28 },
+      { id: 22, firstName: 'Jane', lastName: 'Smith', age: 34 },
+      { id: 23, firstName: 'Michael', lastName: 'Johnson', age: 45 },
+      { id: 13, firstName: 'John', lastName: 'Doe', age: 28 },
+      { id: 32, firstName: 'Jane', lastName: 'Smith', age: 34 },
+      { id: 33, firstName: 'Michael', lastName: 'Johnson', age: 45 },
+      { id: 41, firstName: 'John', lastName: 'Doe', age: 28 },
+      { id: 42, firstName: 'Jane', lastName: 'Smith', age: 34 },
+      { id: 43, firstName: 'Michael', lastName: 'Johnson', age: 45 },
     ],
     []
   );

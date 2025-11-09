@@ -6,6 +6,7 @@ import { NavbarNested } from "@/app/sidebar/NavBarNested";
 import { AppShell } from "@mantine/core";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import 'mantine-react-table/styles.css'; //import MRT styles
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   const { status } = useAuth();
