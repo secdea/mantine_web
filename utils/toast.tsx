@@ -48,4 +48,8 @@ export default class toast {
         else
             notifications.show(pParams);
     }
+
+    static hide(vID: string) {
+        notifications.hide(vID);
+    }
 }
