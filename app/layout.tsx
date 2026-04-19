@@ -9,6 +9,7 @@ import { theme } from '../theme';
 import Script from "next/script";
 import { Notifications } from '@mantine/notifications';
 import { GlobalNavigationToast } from '@/components/GlobalNavigationToast';
+import NavigationObserver from '@/components/NavigationObserver';
 
 export const metadata = {
   title: 'Mantine Next.js template',
@@ -30,7 +31,7 @@ export default function RootLayout({ children }: { children: any }) {
       <body>
         <MantineProvider theme={theme}>
           <Notifications />
-          <GlobalNavigationToast />
+          <NavigationObserver />
             {children}
         </MantineProvider>
       </body>
