@@ -16,6 +16,12 @@ export default function HomePage() {
     router.push("/login");
   };
 
+  function delayedNavitageToHome() {
+    setTimeout(() => {
+      router.push("/");
+    }, 3000);
+  }
+
   return (
     <>
       <div>This is a protected page</div>
@@ -23,6 +29,8 @@ export default function HomePage() {
       <Link href="/login">Go to login page</Link>
       <Button component={Link} href="/login">Go to login page</Button>
       <Button component={Link} href="/">Go to home page</Button>
+      <Button onClick={delayedNavitageToHome}>React navigate to home  page</Button>
+      <a href ="/">Go to home page with anchor</a>
       <Welcome />
       <ColorSchemeToggle />
     </>

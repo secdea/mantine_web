@@ -4,6 +4,7 @@
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, useRef } from "react";
 import { notifications } from "@mantine/notifications";
+import { start } from 'repl';
 
 export default function NavigationObserver() {
     const pathname = usePathname();
@@ -60,37 +61,29 @@ export default function NavigationObserver() {
     };
 
     useEffect(() => {
-        const startProgress = () => showToast('Loading...');
-        const stopProgress = () => hideToast();
+        // 1. Define how to start and stop
+        const startProgress = () => 
+            showToast('Loading...');
 
-        // 1. Handle Clicks on <a> and <Link> tags
-        const handleAnchorClick = (e: MouseEvent) => {
-            const target = e.target as HTMLAnchorElement;
-            const href = target.closest('a')?.href;
-
-            // Only trigger for internal links
-            if (href && href.startsWith(window.location.origin) && href !== window.location.href) {
-                startProgress();
-            }
+        // 2. Patch the browser's "push" function (Run ONCE on mount)
+        const originalPush = window.history.pushState;
+        window.history.pushState = function (...args) {
+            startProgress(); // Start toast when code calls router.push
+            return originalPush.apply(window.history, args);
         };
 
-        // 2. Handle Browser Back/Forward buttons
-        const handlePopState = () => {
-            startProgress();
-        };
+        // 3. Listen for back/forward buttons
+        window.addEventListener('popstate', startProgress);
 
-        document.addEventListener('click', handleAnchorClick);
-        window.addEventListener('popstate', handlePopState);
-
-        // 3. Stop progress when the route actually changes (Navigation Complete)
-        stopProgress();
-
+        // CLEANUP: If the component ever dies, put the browser back to normal
         return () => {
-            document.removeEventListener('click', handleAnchorClick);
-            window.removeEventListener('popstate', handlePopState);
+            window.history.pushState = originalPush;
+            window.removeEventListener('popstate', startProgress);
         };
+    }, []); // Empty array = run once on startup
 
-    }, [pathname, searchParams]);
-
-    return null;
+    // 4. SECOND EFFECT: This one watches for the URL change to STOP the toast
+    useEffect(() => {
+        hideToast(); // Stop toast when URL changes (navigation finished)
+    }, [pathname, searchParams]); // Runs every time the page actually changes
 }
