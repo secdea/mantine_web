@@ -3,7 +3,7 @@
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from '@mantine/core';
 import { theme } from '../theme';
 import Script from "next/script";
@@ -31,8 +31,10 @@ export default function RootLayout({ children }: { children: any }) {
       <body>
         <MantineProvider theme={theme}>
           <Notifications />
-          <NavigationObserver />
-            {children}
+          <Suspense fallback={null}>
+            <NavigationObserver />
+          </Suspense>
+          {children}
         </MantineProvider>
       </body>
     </html>

@@ -8,7 +8,7 @@ import { start } from 'repl';
 
 export default function NavigationObserver() {
     const pathname = usePathname();
-    const searchParams = useSearchParams();
+    // const searchParams = useSearchParams();
     const toastTimer = useRef<NodeJS.Timeout | null>(null);
     const isNavigating = useRef(false);
     const toastVisible = useRef(false);
@@ -85,5 +85,7 @@ export default function NavigationObserver() {
     // 4. SECOND EFFECT: This one watches for the URL change to STOP the toast
     useEffect(() => {
         hideToast(); // Stop toast when URL changes (navigation finished)
-    }, [pathname, searchParams]); // Runs every time the page actually changes
+    }, [location.href]); // Runs every time the page actually changes
+
+    return null; // This component doesn't render anything
 }
