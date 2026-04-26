@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 export default function Loading() {
 
     useEffect(() => {
-      console.log('this is loading...');
+      console.log('this is loading. this is loading...');
     
       return () => {
       
