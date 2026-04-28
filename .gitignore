@@ -130,3 +130,6 @@ dist
 .pnp.*
 
 .DS_Store
+
+public/sw*
+public/swe-worker*
