@@ -7,8 +7,9 @@ const withSerwist = withSerwistInit({
   disable: process.env.NODE_ENV === "development", // Recommended: disable in dev
   additionalPrecacheEntries: [
     { url: "/~offline", revision: "1" },
-    { url: "/dashboard", revision: "1" },
-    { url: "/login.html", revision: "1" }
+    // { url: "/dashboard", revision: "1" },
+    // { url: "/login", revision: "1" },
+    // { url: "/forgotpassword", revision: "1" }
   ], // Example offline fallback
   exclude: [
     ({ asset }) => {
@@ -31,7 +32,7 @@ const withSerwist = withSerwistInit({
     }
   ],
   maximumFileSizeToCacheInBytes: 5000000, // 5MB limit to ensure all HTML is caught
-
+  injectionPoint: "self.__REPLACE_ME__",
 });
 
 const withBundleAnalyzer = bundleAnalyzer({

@@ -5,14 +5,19 @@ import { type PrecacheEntry, Serwist, type SerwistGlobalConfig, StaleWhileRevali
 declare global {
   interface WorkerGlobalScope extends SerwistGlobalConfig {
     __SW_MANIFEST: (PrecacheEntry | string)[] | undefined;
+    __REPLACE_ME__: any;
   }
 }
 declare const self: WorkerGlobalScope;
 
+// Use it EXACTLY once here. 
+// Do not use it in console.log or anywhere else.
+const manifest = self.__SW_MANIFEST;
+
 // 2. Initialize Serwist
 const serwist = new Serwist({
   // Automatically populated with your static HTML/JS/CSS during build
-  precacheEntries: self.__SW_MANIFEST,
+  precacheEntries: self.__REPLACE_ME__,  // Use the local variable
   
   // Important for static exports: handles clean URLs (e.g., /about -> /about.html)
   precacheOptions: {
@@ -38,3 +43,7 @@ const serwist = new Serwist({
 });
 
 serwist.addEventListeners();
+
+// If you need to debug, use the local 'manifest' variable, 
+// NOT the 'self.__SW_MANIFEST' string.
+console.log("Assets precached:", manifest?.length);
