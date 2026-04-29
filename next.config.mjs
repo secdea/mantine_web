@@ -5,27 +5,33 @@ const withSerwist = withSerwistInit({
   swSrc: "app/sw.ts",
   swDest: "public/sw.js",
   disable: process.env.NODE_ENV === "development", // Recommended: disable in dev
-  additionalPrecacheEntries: [{ url: "/~offline", revision: "1" }], // Example offline fallback
+  additionalPrecacheEntries: [
+    { url: "/~offline", revision: "1" },
+    { url: "/dashboard", revision: "1" },
+    { url: "/login.html", revision: "1" }
+  ], // Example offline fallback
   exclude: [
     ({ asset }) => {
       // Exclude source maps
       if (asset.name.endsWith(".map")) return true;
-      
+
       // Exclude server-side code
       if (asset.name.startsWith("server/")) return true;
-      
+
       // Exclude web.config
       if (asset.name.includes("web.config")) return true;
-      
+
       // Exclude JSON files in root
       if (/^[^/]*\.json$/.test(asset.name)) return true;
-      
+
       // Add more exclusions as needed:
       // if (asset.name.includes("specific-file")) return true;
-      
+
       return false;
     }
   ],
+  maximumFileSizeToCacheInBytes: 5000000, // 5MB limit to ensure all HTML is caught
+
 });
 
 const withBundleAnalyzer = bundleAnalyzer({

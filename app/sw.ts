@@ -15,14 +15,9 @@ const serwist = new Serwist({
   precacheEntries: self.__SW_MANIFEST,
   
   // Important for static exports: handles clean URLs (e.g., /about -> /about.html)
-  // precacheOptions: {
-  //   directoryIndex: "index.html",
-  //   cleanURLs: true,
-  // },
   precacheOptions: {
-    // Temporarily turn these off to see if the worker finally installs
-    cleanURLs: false, 
-    directoryIndex: undefined,
+    directoryIndex: "index.html",
+    cleanURLs: true,
   },
 
   // Basic lifecycle settings
