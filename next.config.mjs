@@ -32,7 +32,6 @@ const withSerwist = withSerwistInit({
     }
   ],
   maximumFileSizeToCacheInBytes: 5000000, // 5MB limit to ensure all HTML is caught
-  injectionPoint: "self.__REPLACE_ME__",
 });
 
 const withBundleAnalyzer = bundleAnalyzer({

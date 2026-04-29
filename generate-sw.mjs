@@ -7,7 +7,7 @@ injectManifest({
   globDirectory: "out",
   globPatterns: ["**/*.{html,js,css,png,txt}"],
   globIgnores: ["web.config"],
-  //injectionPoint: "self.__REPLACE_ME__", // Match your custom string
+  injectionPoint: "self.__REPLACE_ME__", // Match your custom string
 }).then(({ count, size }) => {
   console.log(`Precached ${count} files (${size} bytes)`);
 });
